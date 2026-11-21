@@ -1,0 +1,25 @@
+cidr,country_code,country_name
+103.21.0.0/16,IN,India
+49.36.0.0/16,IN,India
+104.16.0.0/16,US,United States
+23.45.0.0/16,US,United States
+81.2.0.0/16,GB,United Kingdom
+86.5.0.0/16,GB,United Kingdom
+85.214.0.0/16,DE,Germany
+91.12.0.0/16,DE,Germany
+90.84.0.0/16,FR,France
+82.64.0.0/16,FR,France
+177.12.0.0/16,BR,Brazil
+189.40.0.0/16,BR,Brazil
+126.12.0.0/16,JP,Japan
+153.120.0.0/16,JP,Japan
+1.128.0.0/16,AU,Australia
+101.160.0.0/16,AU,Australia
+99.224.0.0/16,CA,Canada
+142.112.0.0/16,CA,Canada
+116.12.0.0/16,SG,Singapore
+175.156.0.0/16,SG,Singapore
+41.0.0.0/16,ZA,South Africa
+105.184.0.0/16,ZA,South Africa
+94.56.0.0/16,AE,United Arab Emirates
+86.96.0.0/16,AE,United Arab Emirates

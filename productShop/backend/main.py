@@ -1,16 +1,44 @@
-
+"""Product catalogue REST API + static frontend host (FastAPI + SQLite)."""
+import re
 import sqlite3
 from pathlib import Path
 from typing import Literal, Optional
 
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Query, Request
+from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
+from . import analytics, theme
+from .db import get_conn
+
 ROOT = Path(__file__).resolve().parent.parent
-DB_PATH = ROOT / "db" / "shop.sqlite3"
 FRONTEND_DIR = ROOT / "frontend"
 
-app = FastAPI(title="Product Catalogue API", version="1.0.0")
+app = FastAPI(title="Product Catalogue API", version="2.0.0")
+app.include_router(analytics.router)
+app.include_router(theme.router)
+
+VISIT_PATHS = re.compile(r"^/api/products(/\d+)?$")
+
+
+@app.middleware("http")
+async def track_visits(request: Request, call_next):
+    """Record real storefront traffic (product list / detail requests) with the caller's IP."""
+    response = await call_next(request)
+    if request.method == "GET" and response.status_code == 200 and VISIT_PATHS.match(request.url.path):
+        try:
+            # X-Forwarded-For is only trustworthy behind your own proxy; fine for local use.
+            fwd = request.headers.get("x-forwarded-for", "").split(",")[0].strip()
+            ip = fwd or (request.client.host if request.client else "0.0.0.0")
+            analytics.log_visit(ip, request.url.path, "real")
+        except Exception:
+            pass  # analytics must never break the storefront
+    return response
+
+
+@app.get("/admin", include_in_schema=False)
+def admin_redirect():
+    return RedirectResponse("/admin/")
 
 SORTS = {
     "name": "p.name COLLATE NOCASE ASC",
@@ -23,15 +51,6 @@ BASE_SELECT = """
     SELECT p.*, c.name AS category_name, c.slug AS category_slug
     FROM products p JOIN categories c ON c.id = p.category_id
 """
-
-
-def get_conn() -> sqlite3.Connection:
-    if not DB_PATH.exists():
-        raise HTTPException(503, "Database not initialised. Run: python db/init_db.py")
-    conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row
-    conn.execute("PRAGMA foreign_keys = ON")
-    return conn
 
 
 def serialize(row: sqlite3.Row) -> dict:

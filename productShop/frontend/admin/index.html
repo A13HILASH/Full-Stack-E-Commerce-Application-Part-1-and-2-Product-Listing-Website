@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin · Hearth &amp; Desk</title>
+  <link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+  <header class="bar">
+    <strong>Hearth &amp; Desk admin</strong>
+    <nav role="tablist" aria-label="Sections">
+      <button role="tab" id="tab-analytics" aria-selected="true" data-tab="analytics">Traffic analytics</button>
+      <button role="tab" id="tab-theme" aria-selected="false" data-tab="theme">Theme</button>
+    </nav>
+    <a href="/" target="_blank" rel="noopener">View storefront</a>
+  </header>
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <main>
+    <section id="analytics" role="tabpanel" aria-labelledby="tab-analytics">
+      <div class="panel row">
+        <label>Visits to simulate <input type="number" id="sim-count" value="400" min="1" max="5000"></label>
+        <label>Spread over <select id="sim-days"><option value="1">1 day</option><option value="7" selected>7 days</option><option value="30">30 days</option></select></label>
+        <button class="primary" id="simulate">Simulate traffic</button>
+        <button id="clear">Clear data</button>
+        <form id="lookup-form" class="row" style="margin-left:auto">
+          <label class="sr" for="ip">IP address</label>
+          <input id="ip" placeholder="Look up an IP, e.g. 103.21.4.9" size="26">
+          <button>Find country</button>
+          <output id="lookup-result"></output>
+        </form>
+      </div>
+      <div class="kpis" id="kpis"></div>
+      <div class="panel"><h2>Visitors by country</h2><div id="dist"></div></div>
+      <div class="panel"><h2>Latest visits</h2><div class="scroll"><table id="recent"></table></div></div>
+    </section>
+
+    <section id="theme" role="tabpanel" aria-labelledby="tab-theme" hidden>
+      <div class="theme-grid">
+        <form class="panel" id="theme-form">
+          <h2>Customise storefront</h2>
+          <label>Preset <select id="preset"></select></label>
+          <fieldset><legend>Colours</legend><div id="colors" class="colors"></div></fieldset>
+          <fieldset><legend>Typography</legend>
+            <label>Body font <select name="font_body"></select></label>
+            <label>Heading font <select name="font_heading"></select></label>
+            <label>Base size <output id="o-size"></output><input type="range" name="base_size" min="12" max="22"></label>
+          </fieldset>
+          <fieldset><legend>Shape</legend>
+            <label>Corner radius <output id="o-radius"></output><input type="range" name="radius" min="0" max="28"></label>
+          </fieldset>
+          <div class="row">
+            <button type="button" class="primary" id="save">Save &amp; apply to site</button>
+            <button type="button" id="download">Download CSS</button>
+            <button type="button" id="reset">Reset</button>
+          </div>
+          <details><summary>View generated CSS</summary><pre id="css"></pre></details>
+        </form>
+        <div class="panel preview"><h2>Live preview</h2><iframe id="frame" src="/" title="Storefront preview"></iframe></div>
+      </div>
+    </section>
+  </main>
+  <script src="/admin/admin.js"></script>
+</body>
+</html>

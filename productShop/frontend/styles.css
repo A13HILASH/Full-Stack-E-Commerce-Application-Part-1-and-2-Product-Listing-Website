@@ -1,6 +1,7 @@
 :root {
   --ink: #1b2430; --muted: #5d6877; --line: #d9dee5; --bg: #f3f5f7; --card: #fff;
   --accent: #0e6b62; --accent-ink: #fff; --warn: #a5460c;
+  --header-bg: #1b2430; --header-ink: #fff; --radius: 10px;
   --font: "Avenir Next", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
 }
 * { box-sizing: border-box; }
@@ -10,7 +11,7 @@ a { color: inherit; }
 :focus-visible { outline: 3px solid #f2b134; outline-offset: 2px; }
 
 .top { display: flex; gap: 1.5rem; align-items: center; padding: .9rem clamp(1rem, 4vw, 3rem);
-  background: var(--ink); color: #fff; position: sticky; top: 0; z-index: 5; }
+  background: var(--header-bg); color: var(--header-ink); position: sticky; top: 0; z-index: 5; }
 .brand { font-size: 1.35rem; font-weight: 800; letter-spacing: -.02em; text-decoration: none; white-space: nowrap; }
 .search { flex: 1; max-width: 520px; margin-left: auto; }
 .search input { width: 100%; padding: .6rem .9rem; border-radius: 8px; border: 0; font: inherit; }
@@ -29,7 +30,7 @@ main { padding: 1.5rem clamp(1rem, 4vw, 3rem) 4rem; max-width: 1280px; margin: 0
 
 .bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; gap: 1rem; flex-wrap: wrap; }
 .bar h1 { font-size: 1.4rem; margin: 0; }
-.bar select { padding: .4rem; border-radius: 6px; border: 1px solid var(--line); font: inherit; background: #fff; }
+.bar select { padding: .4rem; border-radius: 6px; border: 1px solid var(--line); font: inherit; }
 
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1.25rem; }
 .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; text-decoration: none; }
@@ -63,3 +64,5 @@ dl.facts dt { color: var(--muted); } dl.facts dd { margin: 0; font-weight: 600; 
   .filters { position: static; }
   .top { flex-wrap: wrap; } .search { max-width: none; flex-basis: 100%; }
 }
+
+input, select { background: var(--card); color: var(--ink); }

@@ -1,4 +1,4 @@
-// Vanilla JS UI. All data comes from the REST API under /api.
+// Vanilla JS single-page UI. All data comes from the REST API under /api.
 const app = document.getElementById("app");
 const searchInput = document.getElementById("q");
 const money = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" });
