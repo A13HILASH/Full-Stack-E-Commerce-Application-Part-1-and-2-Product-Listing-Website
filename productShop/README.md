@@ -98,12 +98,6 @@ curl "localhost:8000/api/products?q=lamp"
 curl -i localhost:8000/api/products/999      # 404
 ```
 
-## Regenerating screenshots (optional)
-```bash
-pip install playwright && playwright install chromium
-python scripts/screenshots.py                # server must be running
-```
-
 ---
 # Part 2 — Admin dashboard (`/admin/`)
 
